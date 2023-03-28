@@ -1,58 +1,47 @@
+from personajes import *
 import random
 
-# Definimos las palabras base para cada nivel
-palabras_faciles = ['tina', 'piso', 'ropa', 'mesa']
-palabras_intermedias = ['ambulante', 'alfombras', 'biologico', 'computado']
-palabras_avanzadas = ['microondas', 'perpendicular', 'revolucionario', 'trascendencia']
-
-# Definimos una función que mostrará la palabra base con las letras adivinadas por el usuario
-def mostrar_palabra(palabra_base, letras_adivinadas):
-    palabra_mostrada = ''
-    for letra in palabra_base:
-        if letra in letras_adivinadas:
-            palabra_mostrada += letra
+def main():
+    print("¡Bienvenido al juego de rol!")
+    player_name = input("Por favor, ingresa tu nombre: ")
+    player_class = choose_player_class()
+    player = player_class(player_name)
+    print(f"¡{player_name}, eres un {player_class.__name__}!")
+    print(f"Tus estadísticas son: {player.stats}")
+    enemy = Goblin()
+    print(f"¡Un {enemy.name} salvaje aparece!")
+    while player.is_alive() and enemy.is_alive():
+        print(f"\n{player_name}: {player.hp} HP | {enemy.name}: {enemy.hp} HP")
+        player.attack(enemy)
+        if enemy.is_alive():
+            enemy.attack(player)
         else:
-            palabra_mostrada += '-'
-    return palabra_mostrada
-
-# Definimos una función que valida que la letra ingresada por el usuario sea única
-def validar_letra(letra, letras_adivinadas):
-    if letra in letras_adivinadas:
-        print('Ya ingresaste esa letra, intenta con otra.')
-        return False
-    else:
-        return True
-
-# Definimos la función principal del juego
-def jugar_ahorcado():
-    # Pedimos al usuario que elija el nivel a jugar
-    nivel = ''
-    while nivel not in ['facil', 'intermedio', 'avanzado']:
-        nivel = input('Elige un nivel para jugar (facil, intermedio, avanzado): ').lower()
-    if nivel == 'facil':
-        palabra_base = random.choice(palabras_faciles)
-    elif nivel == 'intermedio':
-        palabra_base = random.choice(palabras_intermedias)
-    else:
-        palabra_base = random.choice(palabras_avanzadas)
-    letras_adivinadas = []
-    print('La palabra base tiene', len(palabra_base), 'letras.')
-    while True:
-        letra = input('Ingresa una letra (o 0 para salir): ').lower()
-        if letra == '0':
+            print(f"\n¡Has derrotado al {enemy.name}!")
             break
-        if not letra.isalpha() or len(letra) > 1:
-            print('Ingresa una letra valida.')
-            continue
-        if not validar_letra(letra, letras_adivinadas):
-            continue
-        letras_adivinadas.append(letra)
-        palabra_mostrada = mostrar_palabra(palabra_base, letras_adivinadas)
-        print(palabra_mostrada)
-        if '-' not in palabra_mostrada:
-            print('¡Ganaste!')
-            break
-    print('Fin del juego.')
+        input("\nPresiona Enter para continuar...")
+    if player.is_alive():
+        print("\n¡Has ganado el combate!")
+    else:
+        print("\n¡Has perdido el combate!")
+        
+def choose_player_class():
+    print("\nPor favor, elige una clase:")
+    print("1. Mago")
+    print("2. Caballero")
+    print("3. Asesino")
+    print("4. Tanque")
+    choice = input("Ingresa el número de la clase que quieres jugar: ")
+    if choice == "1":
+        return Mage
+    elif choice == "2":
+        return Knight
+    elif choice == "3":
+        return Assassin
+    elif choice == "4":
+        return Tank
+    else:
+        print("¡Esa no es una opción válida!")
+        return choose_player_class()
 
-# Ejecutamos el juego
-jugar_ahorcado()
+if __name__ == "__main__":
+    main()
