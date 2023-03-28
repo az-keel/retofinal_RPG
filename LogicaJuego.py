@@ -1,4 +1,4 @@
-import characters
+import personajes
 
 def main():
     print("¡Bienvenido al juego de rol!")
@@ -42,10 +42,10 @@ def main():
 
 def select_class():
     classes = {
-        1: characters.Mage,
-        2: characters.Knight,
-        3: characters.Assassin,
-        4: characters.Tank
+        1: personajes.Mage,
+        2: personajes.Knight,
+        3: personajes.Assassin,
+        4: personajes.Tank
     }
 
     while True:
@@ -58,8 +58,8 @@ def select_class():
         print("Por favor, ingrese una opción válida.")
 
 def generate_enemies(num_enemies):
-    enemies = [characters.Goblin() for _ in range(num_enemies)]
-    enemies.append(characters.Orc())
+    enemies = [personajes.Goblin() for _ in range(num_enemies)]
+    enemies.append(personajes.Orc())
     return enemies
 
 def select_enemy(enemies):
