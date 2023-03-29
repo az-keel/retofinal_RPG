@@ -20,7 +20,7 @@ class Player:
         else:
             print(f"\n¡{self.name} no ha logrado causar daño!")
             
-    def attack(self, target):
+    def perform_attack(self, target):
         self.attack_enemy(target)
 
     def is_alive(self):
@@ -83,7 +83,7 @@ class Enemy:
         else:
             print(f"\n¡{self.name} no ha logrado causar daño!")
 
-    def attack(self, target):
+    def perform_attack(self, target):
         self.attack_player(target)
 
     def is_alive(self):

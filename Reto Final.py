@@ -1,47 +1,23 @@
 from personajes import *
 from pociones import * 
 from LogicaJuego import * 
-from personajes import*
-from pociones import *
 import random
-class Player:
-    def __init__(self, name, player_type):
-        self.name = name
-        self.player_type = player_type
-        self.health = 100
-        self.attack_points = 10
-        self.defense_points = 5
-        self.potions = {"attack": 2, "defense": 2}
-
-    def attack(self, enemy):
-        damage = self.attack_points - enemy.defense_points
-        enemy.health -= damage
-
-    def use_potion(self, potion_type):
-        if self.potions[potion_type] > 0:
-            if potion_type == "attack":
-                self.attack_points += 5
-            elif potion_type == "defense":
-                self.defense_points += 5
-            self.potions[potion_type] -= 1
-            print(f"{self.name} used a {potion_type} potion. New {potion_type} points: {self.attack_points if potion_type == 'attack' else self.defense_points}")
-        else:
-            print(f"{self.name} does not have any {potion_type} potions.")
 
 def main():
     print("¡Bienvenido al juego de rol!")
     player_name = input("Por favor, ingresa tu nombre: ")
     player_class = choose_player_class()
     player = player_class(player_name)
+    #from pdb import set_trace; set_trace()
     print(f"¡{player_name}, eres un {player_class.__name__}!")
     print(f"Tus estadísticas son: {player.stats}")
     enemy = Goblin()
     print(f"¡Un {enemy.name} salvaje aparece!")
     while player.is_alive() and enemy.is_alive():
         print(f"\n{player_name}: {player.hp} HP | {enemy.name}: {enemy.hp} HP")
-        player.attack(enemy)
+        player.perform_attack(enemy)
         if enemy.is_alive():
-            enemy.attack(player)
+            enemy.perform_attack(player)
         else:
             print(f"\n¡Has derrotado al {enemy.name}!")
             break
