@@ -1,4 +1,6 @@
 from personajes import *
+from pociones import* 
+from LogicaJuego import*
 import random
 
 def main():
