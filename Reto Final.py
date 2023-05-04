@@ -115,16 +115,35 @@ def create_enemy(player_level):
         enemy.level_up()
     return enemy
 
+class Character:
+    ...
+    def special_ability(self):
+        pass
+
+class Mage(Player):
+    ...
+    def special_ability(self):
+        return "1. Powerful spell"
+
+class Knight(Player):
+    ...
+    def special_ability(self):
+        return "1. Fortify"
+
+class Assassin(Player):
+    ...
+    def special_ability(self):
+        return "1. Critical strike"
+
+class Tank(Player):
+    ...
+    def special_ability(self):
+        return "1. Provoke"
+
 def special_ability_menu(player):
     print("Choose a special ability:")
-    if isinstance(player, Mage):
-        print("1. Powerful spell")
-    elif isinstance(player, Knight):
-        print("1. Fortify")
-    elif isinstance(player, Assassin):
-        print("1. Critical strike")
-    elif isinstance(player, Tank):
-        print("1. Provoke")
+    print(player.special_ability())
+
 
     choice = int(input())
     if choice == 1:
