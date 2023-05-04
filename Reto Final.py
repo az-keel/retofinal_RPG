@@ -30,31 +30,37 @@ class Character:
         self.defense += 5
         print(f"{self.name} has leveled up! Now at level {self.level}.")
 
+    def special_ability(self):
+        pass
+
 class Mage(Character):
     def __init__(self):
         super().__init__("Mage", 70, 20, 5, 1, 0)
 
-    # Habilidad especial: lanzar un hechizo poderoso
     def cast_spell(self, enemy):
         damage = self.attack * 2
         enemy.take_damage(damage)
         print(f"You cast a powerful spell dealing {damage} damage to the {enemy.name}!")
 
+    def special_ability(self):
+        return "1. Powerful spell"
+
 class Knight(Character):
     def __init__(self):
         super().__init__("Knight", 100, 15, 10, 1, 0)
 
-    # Habilidad especial: fortalecerse temporalmente
     def fortify(self):
         self.attack *= 1.5
         self.defense *= 1.5
         print("You have fortified your attack and defense for the next turn!")
 
+    def special_ability(self):
+        return "1. Fortify"
+
 class Assassin(Character):
     def __init__(self):
         super().__init__("Assassin", 80, 25, 8, 1, 0)
 
-    # Habilidad especial: ataque crítico con mayor probabilidad de golpe crítico
     def critical_strike(self, enemy):
         crit_chance = 0.5
         if random.random() < crit_chance:
@@ -65,15 +71,20 @@ class Assassin(Character):
             print(f"You dealt {damage} damage to the {enemy.name}.")
         enemy.take_damage(damage)
 
+    def special_ability(self):
+        return "1. Critical strike"
+
 class Tank(Character):
     def __init__(self):
         super().__init__("Tank", 120, 10, 15, 1, 0)
 
-    # Habilidad especial: provocar al enemigo, forzándolo a atacar solo al tanque
     def provoke(self, enemy):
         enemy.attack -= 5
         enemy.defense -= 5
         print(f"You have provoked the {enemy.name}, lowering its attack and defense!")
+
+    def special_ability(self):
+        return "1. Provoke"
 
 class Enemy(Character):
     def __init__(self, name, health, attack, defense, level):
@@ -94,7 +105,7 @@ def choose_character():
         return Mage()
     elif choice == 2:
         return Knight()
-    elif choice == 3:
+        elif choice == 3:
         return Assassin()
     elif choice == 4:
         return Tank()
@@ -115,35 +126,9 @@ def create_enemy(player_level):
         enemy.level_up()
     return enemy
 
-class Character:
-    ...
-    def special_ability(self):
-        pass
-
-class Mage(Player):
-    ...
-    def special_ability(self):
-        return "1. Powerful spell"
-
-class Knight(Player):
-    ...
-    def special_ability(self):
-        return "1. Fortify"
-
-class Assassin(Player):
-    ...
-    def special_ability(self):
-        return "1. Critical strike"
-
-class Tank(Player):
-    ...
-    def special_ability(self):
-        return "1. Provoke"
-
 def special_ability_menu(player):
     print("Choose a special ability:")
     print(player.special_ability())
-
 
     choice = int(input())
     if choice == 1:
@@ -204,39 +189,41 @@ def enemy_turn(player, enemy):
 def main():
     print("Welcome to the RPG game!")
 
-player = choose_character()
-print(f"You have chosen the {player.name}.")
-print_stats(player)
-
-while True:
-    enemy = create_enemy(player.level)
-    print(f"A wild {enemy.name} has appeared!")
-    print_stats(enemy)
-
-    while not player.is_dead() and not enemy.is_dead():
-        if battle_menu(player, enemy):
-            break
-
-        if enemy.is_dead():
-            print(f"You have defeated the {enemy.name}!")
-            player.gain_exp(enemy.level * 50)
-        else:
-            enemy_turn(player, enemy)
-
-            if player.is_dead():
-                print(f"You havebeen defeated by the {enemy.name}.")
-                print("Game over.")
-
+    player = choose_character()
+    print(f"You have chosen the {player.name}.")
     print_stats(player)
 
-    if player.is_dead():
-        break
+    while True:
+        enemy = create_enemy(player.level)
+        print(f"A wild {enemy.name} has appeared!")
+        print_stats(enemy)
 
-    print("Do you want to continue? (yes/no)")
-    continue_game = input().lower()
-    if continue_game == "no":
-        print("Thank you for playing!")
-        break
+        while not player.is_dead() and not enemy.is_dead():
+            if battle_menu(player, enemy):
+                break
 
-if __name__ == "__main__":
-    main()
+            if enemy.is_dead():
+                print(f"You have defeated the {enemy.name}!")
+                player.gain_exp(enemy.level * 50)
+            else:
+                enemy_turn(player, enemy)
+
+                if player.is_dead():
+                    print(f"You have been defeated by the {enemy.name}.")
+                    print("Game over.")
+                    return
+
+            print_stats(player)
+
+        if player.is_dead():
+            break
+
+        print("Do you want to continue? (yes/no)")
+        continue_game = input().lower()
+        if continue_game == "no":
+            print("Thank you for playing!")
+            break
+
+        if __name__ == "__main__":
+            main()
+
