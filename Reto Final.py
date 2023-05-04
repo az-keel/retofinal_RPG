@@ -224,6 +224,6 @@ def main():
             print("Thank you for playing!")
             break
 
-        if __name__ == "__main__":
-            main()
+if __name__ == "__main__":
+    main()
 
