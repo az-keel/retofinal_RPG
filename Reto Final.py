@@ -105,7 +105,7 @@ def choose_character():
         return Mage()
     elif choice == 2:
         return Knight()
-        elif choice == 3:
+    elif choice == 3:
         return Assassin()
     elif choice == 4:
         return Tank()
