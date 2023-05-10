@@ -44,6 +44,8 @@ class Mage(Character):
 
     def special_ability(self):
         return "1. Powerful spell"
+    def use_special_ability(self,enemy):
+        self.cast_spell(enemy)
 
 class Knight(Character):
     def __init__(self):
@@ -56,6 +58,8 @@ class Knight(Character):
 
     def special_ability(self):
         return "1. Fortify"
+    def use_special_ability(self,enemy):
+        self.fortify()
 
 class Assassin(Character):
     def __init__(self):
@@ -73,6 +77,8 @@ class Assassin(Character):
 
     def special_ability(self):
         return "1. Critical strike"
+    def use_special_ability(self,enemy):
+        self.critical_strike(enemy)
 
 class Tank(Character):
     def __init__(self):
@@ -85,6 +91,8 @@ class Tank(Character):
 
     def special_ability(self):
         return "1. Provoke"
+    def use_special_ability(self,enemy):
+        self.provoke(enemy)
 
 class Enemy(Character):
     def __init__(self, name, health, attack, defense, level):
