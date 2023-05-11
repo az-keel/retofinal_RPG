@@ -161,16 +161,11 @@ def battle_menu(player, enemy):
         print(f"You dealt {damage} damage to the {enemy.name}!")
     elif choice == 2:
         print("You brace yourself for the next attack.")
-    elif choice == 3:
+    
+    elif choice == 3:    
         if special_ability_menu(player):
-            if isinstance(player, Mage):
-                player.cast_spell(enemy)
-            elif isinstance(player, Knight):
-                player.fortify()
-            elif isinstance(player, Assassin):
-                player.critical_strike(enemy)
-            elif isinstance(player, Tank):
-                player.provoke(enemy)
+            player.use_special_ability(enemy)
+
     elif choice == 4:
         print("You drink a potion.")
         player.health += 30
